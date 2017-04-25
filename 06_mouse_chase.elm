@@ -76,11 +76,12 @@ getDirection : Position -> Position -> Direction
 getDirection mousePos carPos =
   ((getHorizontalDirection mousePos carPos), (getVerticalDirection mousePos carPos))
 
+-- Returns canvas mouse coordinates
 correctMousePos : Mouse.Position -> Size -> Position
 correctMousePos mousePos collageSize =
   Position
     ((toFloat mousePos.x) - (collageSize.width / 2))
-    ((collageSize.height / 2) - (toFloat mousePos.y) + 180)
+    ((collageSize.height / 2) - (toFloat mousePos.y) + 180)  -- 180 offsets the text at the top, not exact
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
