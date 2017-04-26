@@ -26,7 +26,7 @@ type alias Model =
   {
     mousePos : Position,
     carPos : Position,
-    collage: Size
+    collageSize: Size
   }
 
 type Msg = NewMousePosition Mouse.Position | OnTime Time | WindowSize Window.Size
@@ -37,7 +37,7 @@ initialSizeCmd =
 
 init : (Model, Cmd Msg)
 init =
-  ({ mousePos = (Position 0 0), carPos = (Position 0 0), collage = (Size 0 0)}, initialSizeCmd)
+  ({ mousePos = (Position 0 0), carPos = (Position 0 0), collageSize = (Size 0 0)}, initialSizeCmd)
 
 
 --- Subscriptions
@@ -88,10 +88,10 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
     WindowSize size ->
-      ({model | collage = (Size (toFloat size.width) (toFloat size.height))}, Cmd.none)
+      ({model | collageSize = (Size (toFloat size.width) (toFloat size.height))}, Cmd.none)
     NewMousePosition mousePos ->
       (
-        {model | mousePos = (correctMousePos mousePos model.collage)},
+        {model | mousePos = (correctMousePos mousePos model.collageSize)},
         Cmd.none
       )
     OnTime _ ->
@@ -148,7 +148,7 @@ view model =
           style [("text-align", "center")]
         ]
         [
-          "Canvas size: (height=" ++ (toString model.collage.height) ++ ",width=" ++ (toString model.collage.width) ++ ")"
+          "Canvas size: (height=" ++ (toString model.collageSize.height) ++ ",width=" ++ (toString model.collageSize.width) ++ ")"
             |> Html.text
         ],
 
@@ -179,7 +179,7 @@ view model =
             |> Html.text
         ],
 
-      toHtml (collage (truncate model.collage.width) (truncate model.collage.height)
+      toHtml (collage (truncate model.collageSize.width) (truncate model.collageSize.height)
         (drawCar model.carPos)
       ),
 
