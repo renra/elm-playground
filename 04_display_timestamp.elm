@@ -26,7 +26,7 @@ init =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-  Time.every (1*second) OnTime
+  Time.every (10*millisecond) OnTime
 
 
 --- View
